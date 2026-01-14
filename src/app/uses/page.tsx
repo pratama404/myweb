@@ -6,7 +6,16 @@ export const metadata = {
     description: 'Software and hardware I use daily.',
 };
 
-const USES_DATA = [
+
+interface UsesItem {
+    name: string;
+    description: string;
+    tag: string;
+    link?: string;
+    badge?: string;
+}
+
+const USES_DATA: { category: string; items: UsesItem[] }[] = [
     {
         category: "Workstation",
         items: [
