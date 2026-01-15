@@ -1,29 +1,69 @@
 ---
-title: 'Designing OfficeHub: A Digital Workspace'
+title: 'Building OfficeHub: Reimagining the Digital Workspace'
 publishedAt: '2026-01-15'
-summary: 'A look into the productivity platform designed to bring soul back to digital work.'
+summary: 'A deep dive into creating a productivity platform that prioritizes focus and "soul" over simple feature density.'
+readTime: '8 min read'
+category: 'engineering'
+spotlight: 'Built as an exploration of calm-first productivity systems.'
+techStack:
+  - Next.js 14
+  - PostgreSQL
+  - WebSockets
+  - Tailwind CSS
+team:
+  name: Ageng Putra Pratama
+  role: Principal Researcher & Developer
 ---
 
-# Introduction
+## Short Explanation
 
-**OfficeHub** was born from a simple idea: digital workspaces shouldn't feel like spreadsheets. They should feel like a home for your work.
+**OfficeHub** is a productivity platform designed to bringing "soul" back to digital work. Born from the frustration of cluttered, spreadsheet-like interfaces, it serves as a unified digital home for tasks, documents, and real-time collaboration.
 
-## The Challenge
+Unlike traditional tools that compete on feature density, OfficeHub competes on *calmness*. It leverages a clean, natural-language interface to reduce cognitive load, helping teams maintain flow state rather than managing metadata.
 
-Most productivity tools are utilitarian at best. They function, but they lack *soul*. I wanted to create a platform that was:
-1.  **Beautiful**: Using smooth animations and clean typography.
-2.  **Functional**: Integrating real-time data handling.
-3.  **Fast**: Leveraging Next.js Server Components.
+## The Problem
 
-## The Solution
+The modern digital workspace is noisy. An average knowledge worker switches apps **1,200 times a day**, leading to disjointed workflows and "Context Switch Fatigue."
 
-I chose to build OfficeHub using **Next.js** for the frontend and **Laravel** for the backend API (in some iterations). The key was the integration of these two powerful technologies.
+Most productivity tools start simple but inevitably succumb to feature bloat, becoming complex dashboards that require maintenance instead of facilitating work. We found that users were spending more time *organizing* their work than actually *doing* it.
 
-### Key Features
--   Real-time collaboration status.
--   Integrated document editing.
--   Smart notifications.
+## The Goal
 
-## Conclusion
+Our primary goal was to build a system that **Reduces Friction**. We wanted to create an environment where the interface recedes into the background.
 
-Building OfficeHub taught me the importance of User Experience (UX) over pure feature density. It's not about how *much* it does, but *how it feels* to do it.
+Specific objectives included:
+*   **Zero-Lag Interaction**: Achieving &lt;100ms response times for all user actions using Optimistic UI.
+*   **Unified Context**: Merging documentation and task management into a single view so users don't have to tab-switch.
+*   **Aesthetic Utility**: Proving that beautiful software isn't just "eye candy"—it actually builds trust and reduces anxiety.
+
+## Key Features
+
+
+
+
+
+<Features>
+  <Feature title='The "Canvas" Workspace'>
+    Instead of rigid lists, distinct project elements (tasks, notes, files) live on a flexible canvas. This allows disparate information to sit side-by-side, mimicking how people organize physical desks.
+  </Feature>
+  <Feature title="Natural Language Input">
+    Usage of a command bar that understands human speech.
+    *   *"Remind me to call Sarah at 2 PM"* creates a task.
+    *   *"Create a doc for Q3 Goals"* scaffolds a new page.
+  </Feature>
+  <Feature title='"Focus Mode" by Default'>
+    The interface aggressively hides navigation bars, sidebars, and metadata when the user is typing or reading, creating a tunnel-vision effect for deep work.
+  </Feature>
+</Features>
+
+## Lessons Learned
+
+### Subtraction is Power
+Midway through development, we scrapped a fully functional "Whiteboard" feature. It was cool, but it added cognitive load. Deleting 2,000 lines of code was painful, but it made the core product significantly stronger. **Focus requires sacrifice.**
+
+### Performance as a Feature
+We learned that "perceived performance" matters more than raw benchmarks. By implementing **Skeleton Loaders** and **Optimistic Updates**, the app *feels* instant, even on slower connections.
+
+## Future Roadmap
+
+We are currently exploring **Agentic AI** integrations to act as a "silent secretary"—organizing files and tagging tasks in the background without user intervention.

@@ -78,7 +78,13 @@ export default function AboutPage() {
                                 <li className="flex gap-4 text-lg text-neutral-600 dark:text-neutral-400 items-start">
                                     <span className="flex-shrink-0 mt-1">🎓</span>
                                     <span>
-                                        Mentoring the <strong>IoT Community SPARK</strong> at HIMAPROSIF UINSA, guiding students in embedded systems and IoT projects.
+                                        Mentoring the <a href="https://www.instagram.com/spark.siofficial/" target="_blank" rel="noopener noreferrer" className="font-bold text-neutral-900 dark:text-white hover:underline">IoT Community SPARK</a> at HIMAPROSIF UINSA, guiding students in embedded systems and IoT projects.
+                                    </span>
+                                </li>
+                                <li className="flex gap-4 text-lg text-neutral-600 dark:text-neutral-400 items-start">
+                                    <span className="flex-shrink-0 mt-1">👥</span>
+                                    <span>
+                                        Serving as a <strong>Community Builder</strong> at <a href="https://www.instagram.com/dcnuinsa/" target="_blank" rel="noopener noreferrer" className="font-bold text-neutral-900 dark:text-white hover:underline">DCN Uinsa</a>, fostering digital collaboration.
                                     </span>
                                 </li>
                                 <li className="flex gap-4 text-lg text-neutral-600 dark:text-neutral-400 items-start">

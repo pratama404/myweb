@@ -70,9 +70,19 @@ export default function ProductsPage() {
 
                             {/* Image Placeholder Area */}
                             <div className="relative h-48 w-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
-                                {/* Use a pattern or gradient if no image */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 opacity-50" />
-                                <ShoppingBag className="text-neutral-300 dark:text-neutral-700 w-16 h-16 relative z-10" />
+                                {product.image ? (
+                                    <Image
+                                        src={product.image}
+                                        alt={product.name}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                ) : (
+                                    <>
+                                        <div className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 opacity-50" />
+                                        <ShoppingBag className="text-neutral-300 dark:text-neutral-700 w-16 h-16 relative z-10" />
+                                    </>
+                                )}
 
                                 <div className="absolute top-4 right-4 z-20">
                                     <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-white/90 dark:bg-black/90 text-emerald-600 rounded-full shadow-sm backdrop-blur-sm">

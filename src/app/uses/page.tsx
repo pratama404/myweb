@@ -69,7 +69,7 @@ const USES_DATA: { category: string; items: UsesItem[] }[] = [
         ]
     },
     {
-        category: "Cloud & Services (Affiliate)",
+        category: "Cloud & Services",
         items: [
             {
                 name: "Vercel",
@@ -77,6 +77,13 @@ const USES_DATA: { category: string; items: UsesItem[] }[] = [
                 tag: "Hosting",
                 link: "https://vercel.com",
                 badge: "Recommended"
+            },
+            {
+                name: "Railway",
+                description: "Deploy without the hassle. I use it for heavy backend tasks. Sign up to get $20 in credits.",
+                tag: "Infrastructure",
+                link: "https://railway.com?referralCode=dzAA4r",
+                badge: "$20 Credit"
             },
             {
                 name: "Supabase",
@@ -87,10 +94,10 @@ const USES_DATA: { category: string; items: UsesItem[] }[] = [
             },
             {
                 name: "DigitalOcean",
-                description: "Simple, scalable cloud computing. I use Droplets for hosting my custom Docker containers.",
+                description: "Simple, scalable cloud computing. I use Droplets for hosting my custom Docker containers. Get $200 in credit.",
                 tag: "VPS",
-                link: "https://m.do.co/c/affiliate_code_here", // Placeholder for user to fill
-                badge: "Results ($200 Credit)"
+                link: "https://m.do.co/c/66e27bb5092b",
+                badge: "$200 Credit"
             },
             {
                 name: "Cursor",
@@ -134,7 +141,6 @@ export default function UsesPage() {
                     <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white md:text-5xl">Uses</h1>
                     <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl text-lg">
                         A curated list of the hardware, software, and tools I use to build things.
-                        Includes affiliate links for services I personally recommend.
                     </p>
                 </div>
 

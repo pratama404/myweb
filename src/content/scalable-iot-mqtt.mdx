@@ -1,0 +1,109 @@
+---
+title: 'Building Scalable IoT Pipelines with MQTT and Python'
+publishedAt: '2025-09-08'
+summary: 'Architecture patterns for handling millions of sensor data points in real-time.'
+readTime: '7 min read'
+category: 'engineering'
+spotlight: 'Handling 1M+ messages/day.'
+techStack:
+  - Python
+  - MQTT (Mosquitto)
+  - TimeScaleDB
+  - Docker Swarm
+team:
+  name: Ageng Putra Pratama
+  role: IoT Systems Architect
+---
+
+## The Challenge of scale
+
+In the world of IoT, "it works on my machine" is a dangerous phrase. Connecting one ESP32 sensor involves simple HTTP requests. Connecting **1,000 sensors** sending data every second? That's a classic distributed systems nightmare.
+
+When building the backend for a smart agriculture monitoring system, we faced exactly this problem. Our initial HTTP-based REST API crumbled under the load of concurrent connections.
+
+## Why HTTP Fails for IoT
+
+HTTP is request-response based. It requires a 3-way handshake, headers, and connection teardown for *every single packet*. For a temperature sensor sending 4 bytes of data ("25.5"), overhead headers might be 400 bytes. That's a 99% overhead interaction.
+
+We migrated to **MQTT**, a binary protocol running over TCP that keeps a persistent connection open.
+
+## The Architecture: "The Funnel"
+
+We designed a "funnel" architecture to protect our database from the raw firehose of sensor data.
+
+<Features>
+  <Feature
+    title="Ingest: MQTT Broker"
+    description="Traefik + EMQX handling 10k concurrent connections."
+  />
+  <Feature
+    title="Buffer: Redis Stream"
+    description="Decoupling ingestion from write speed using Streams."
+  />
+  <Feature
+    title="Worker: Python Async"
+    description="High-throughput batch processing with asyncio."
+  />
+  <Feature
+    title="Store: TimescaleDB"
+    description="Hypertable compression for petabyte-scale storage."
+  />
+</Features>
+
+## 1. The Async Consumer (Python)
+
+Traditional synchronous Python workers block while waiting for I/O. We used `asyncio` to handle thousands of messages per second on a single $5 DigitalOcean droplet.
+
+```python
+import asyncio
+import json
+import aiomqtt
+import redis.asyncio as redis
+
+# Connect to Redis Stream
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+async def main():
+    async with aiomqtt.Client("mqtt.ageng.dev") as client:
+        await client.subscribe("sensors/+/data")
+        
+        async for message in client.messages:
+            payload = json.loads(message.payload)
+            
+            # FAST: Push to Redis Stream (Buffer)
+            # Don't write to Postgres yet!
+            await r.xadd('sensor_stream', {
+                'device_id': payload['id'],
+                'temp': payload['temp'],
+                'ts': payload['timestamp']
+            })
+
+# Run the event loop
+asyncio.run(main())
+```
+
+This worker does **zero** processing. Its only job is to move data from the Network (MQTT) to Memory (Redis).
+
+## 2. Batch Processing to TimescaleDB
+
+A separate worker pulls data in chunks of 1,000 from Redis and performs a bulk `INSERT`. This is orders of magnitude faster than individual inserts.
+
+```sql
+-- TimescaleDB Hypertable Definition
+CREATE TABLE sensor_data (
+  time        TIMESTAMPTZ       NOT NULL,
+  device_id   TEXT              NOT NULL,
+  temperature DOUBLE PRECISION  NULL
+);
+
+-- Turn it into a hypertable partitioned by time
+SELECT create_hypertable('sensor_data', 'time');
+```
+
+## Key Design Decisions
+
+The most critical decision was **decoupling**. By putting Redis in the middle, we can restart our database for maintenance without losing a single sensor packet—they just queue up in Redis until the DB is back online.
+
+## Conclusion
+
+Scalability in IoT isn't about bigger servers; it's about efficient protocols. By respectfully using `asyncio` and separating ingestion from storage, we built a pipeline that averages **4ms latency** from sensor to dashboard.

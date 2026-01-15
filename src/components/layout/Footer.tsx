@@ -33,6 +33,9 @@ export default function Footer() {
                         <div className="space-y-2">
                             <h3 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">Ageng Putra Pratama</h3>
                             <p className="text-neutral-500 dark:text-neutral-400 text-sm">based in Surabaya, ID.</p>
+                            <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-sm">
+                                Creating a hopeful future through writing ✍️, design 🎨, engineering 🧩, and laughter 🌱.
+                            </p>
                         </div>
 
                         {/* Social Icons */}

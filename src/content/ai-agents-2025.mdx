@@ -1,0 +1,65 @@
+---
+title: 'The State of AI Agents in 2025'
+publishedAt: '2025-08-21'
+summary: 'Exploring the shift from chat-based LLMs to autonomous agentic workflows.'
+readTime: '9 min read'
+category: 'engineering'
+spotlight: 'Beyond the Chatbot.'
+techStack:
+  - LLMs (GPT-5)
+  - LangChain
+  - Vector DBs
+  - AutoGen
+team:
+  name: Ageng Putra Pratama
+  role: AI Researcher
+---
+
+## The End of "Chat"
+
+For the last three years, "AI" meant a text box where you ask a question and get an answer. It was a librarian—knowledgeable, but passive.
+
+In 2025, we are witnessing the rise of **Agentic AI**. These are not systems that just *talk*; they are systems that *do*. They have hands (tools), eyes (vision), and most importantly, permission to act.
+
+## Tool Use as a First-Class Citizen
+
+The breakthrough wasn't just bigger models; it was better **tool calling**. Models can now reliably output structured JSON to invoke APIs.
+
+I recently built an agent for a logistics client. It doesn't just "suggest" a route. It:
+1.  **Checks** traffic via Google Maps API.
+2.  **Queries** the warehouse SQL database for inventory.
+3.  **Drafts** an email to the driver.
+4.  **Pauses** for human approval.
+5.  **Executes** the dispatch.
+
+This "Loop-Plan-Execute" cycle is the heartbeat of modern AI applications.
+
+## Memory and Context
+
+Stateless chatbots are amnesiacs. Agents need long-term memory. We are moving beyond simple RAG (Retrieval Augmented Generation) to **GraphRAG**.
+
+Instead of just finding "similar chunks" of text, GraphRAG understands relationships. If I ask "How does the shipping delay affect project Alpha?", the Agent traverses the knowledge graph: Shipping Delay -> affects Inventory -> affects Production -> affects Project Alpha. It "reasons" across documents.
+
+## The Safety Challenge
+
+Giving AI access to `DELETE /users` is terrifying. The challenge of 2025 isn't capability; it's **control**. We are spending more time writing "System Prompts" and "Guardrails" than actual application code.
+
+We implemented "Human-in-the-Loop" patterns where critical actions (sending money, deleting data) generate a permission token that requires a physical user click to resolve.
+
+## Key Trends
+
+<Features>
+  <Feature title="Multi-Agent Systems">
+    Orchestrating specialized agents (a Coder, a Reviewer, a Tester) that collaborate to solve complex tasks autonomously.
+  </Feature>
+  <Feature title="local-First AI">
+    Running quantized 7B parameter models on user devices for privacy and zero-latency interactions.
+  </Feature>
+  <Feature title="Action > Generation">
+    The value metric has shifted from "tokens generated per second" to "successful tasks completed per minute".
+  </Feature>
+</Features>
+
+## Conclusion
+
+We are moving from "Copilots" (assistants that sit next to you) to "Autopilots" (agents that run in the background). The distinction is profound. As developers, our job is shifting from writing logic to defining **goals** and **constraints**. The AI handles the implementation.

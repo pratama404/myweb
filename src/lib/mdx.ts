@@ -1,35 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import readingTime from 'reading-time';
+import matter from 'gray-matter';
 
-interface Metadata {
+export interface Metadata {
     title: string;
     publishedAt: string;
     summary: string;
     image?: string;
     readTime?: string;
-}
-
-function parseFrontmatter(fileContent: string) {
-    const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
-    const match = frontmatterRegex.exec(fileContent);
-    const frontMatterBlock = match![1];
-    const content = fileContent.replace(frontmatterRegex, '').trim();
-    const frontMatterLines = frontMatterBlock.trim().split('\n');
-    const metadata: Partial<Metadata> = {};
-
-    frontMatterLines.forEach((line) => {
-        const [key, ...valueArr] = line.split(': ');
-        let value = valueArr.join(': ').trim();
-        value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
-        metadata[key.trim() as keyof Metadata] = value;
-    });
-
-    // Calculate reading time
-    const readTime = readingTime(content).text;
-    metadata.readTime = readTime;
-
-    return { metadata: metadata as Metadata, content };
+    spotlight?: string;
+    category?: 'engineering' | 'journal' | 'article';
+    techStack?: string[];
+    team?: {
+        name: string;
+        role: string;
+    };
 }
 
 function getMDXFiles(dir: string) {
@@ -38,7 +24,15 @@ function getMDXFiles(dir: string) {
 
 function readMDXFile(filePath: string) {
     const rawContent = fs.readFileSync(filePath, 'utf-8');
-    return parseFrontmatter(rawContent);
+    const { content, data } = matter(rawContent);
+
+    // Calculate reading time
+    const readTime = readingTime(content).text;
+
+    return {
+        metadata: { ...data, readTime } as Metadata,
+        content
+    };
 }
 
 export function getBlogPosts() {

@@ -1,18 +1,35 @@
-"use client";
-
 import Container from '@/components/layout/Container';
-import WritingCard from '@/components/cards/WritingCard';
-import { WRITING_POSTS, WritingSource } from '@/data/writing';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Coffee, FileCode, LayoutGrid } from 'lucide-react';
+import { WRITING_POSTS, WritingPost } from '@/data/writing';
+import { getBlogPosts } from '@/lib/mdx';
+import BlogFeed from '@/components/blog/BlogFeed';
+
+export const metadata = {
+    title: 'Writing Hub | Ageng Putra Pratama',
+    description: 'Technical deep dives, thoughts on AI, and personal journal.',
+};
 
 export default function BlogPage() {
-    const [filter, setFilter] = useState<'all' | WritingSource>('all');
+    // 1. Fetch Local Posts
+    const localPostsRaw = getBlogPosts();
 
-    const filteredPosts = filter === 'all'
-        ? WRITING_POSTS
-        : WRITING_POSTS.filter(post => post.source === filter);
+    // 2. Transform to WritingPost format
+    const localPosts: WritingPost[] = localPostsRaw.map((post) => ({
+        id: post.slug,
+        title: post.metadata.title,
+        description: post.metadata.summary,
+        date: formatDate(post.metadata.publishedAt),
+        source: 'local',
+        slug: post.slug,
+        tags: ['Article'], // Default tag if not in metadata, or parse from metadata if added later
+        readTime: post.metadata.readTime,
+        category: post.metadata.category || 'article',
+        url: `/blog/${post.slug}`
+    }));
+
+    // 3. Merge with External Posts and Sort by Date
+    const allPosts = [...localPosts, ...WRITING_POSTS].sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
 
     return (
         <Container>
@@ -25,57 +42,18 @@ export default function BlogPage() {
                     </h1>
                     <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
                         A collection of thoughts, technical deep dives, and random musings.
-                        I write about code on <strong>Medium</strong> and life on <strong>Blogger</strong>.
+                        I write about code on <a href="https://medium.com/@agengputrapratama" target="_blank" className="font-bold text-neutral-900 dark:text-white hover:underline">Medium</a> and life on <a href="https://agengputrapratama.blogspot.com/" target="_blank" className="font-bold text-neutral-900 dark:text-white hover:underline">Blogger</a>.
                     </p>
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="flex flex-wrap gap-2 p-1 bg-neutral-100 dark:bg-neutral-900/50 rounded-xl w-fit border border-neutral-200 dark:border-white/5">
-                    <button
-                        onClick={() => setFilter('all')}
-                        className={cn(
-                            "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
-                            filter === 'all'
-                                ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-sm"
-                                : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
-                        )}
-                    >
-                        <LayoutGrid size={16} />
-                        All Posts
-                    </button>
-                    <button
-                        onClick={() => setFilter('medium')}
-                        className={cn(
-                            "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
-                            filter === 'medium'
-                                ? "bg-blue-500 text-white shadow-sm"
-                                : "text-neutral-500 hover:text-blue-500"
-                        )}
-                    >
-                        <FileCode size={16} />
-                        Technical (Medium)
-                    </button>
-                    <button
-                        onClick={() => setFilter('blogger')}
-                        className={cn(
-                            "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
-                            filter === 'blogger'
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-neutral-500 hover:text-orange-500"
-                        )}
-                    >
-                        <Coffee size={16} />
-                        Journal (Blogger)
-                    </button>
-                </div>
-
-                {/* Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredPosts.map((post, index) => (
-                        <WritingCard key={post.id} post={post} index={index} />
-                    ))}
-                </div>
+                {/* Client-Side Feed (Filter/Search) */}
+                <BlogFeed initialPosts={allPosts} />
             </div>
         </Container>
     );
+}
+
+function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }

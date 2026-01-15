@@ -1,0 +1,101 @@
+---
+title: 'Optimizing Next.js 15 Server Components for High Traffic'
+publishedAt: '2025-10-12'
+summary: 'A deep dive into caching strategies and streaming SSR patterns used in enterprise applications.'
+readTime: '6 min read'
+category: 'engineering'
+spotlight: 'Performance engineering for scale.'
+techStack:
+  - Next.js 15
+  - Redis
+  - Vercel Edge
+  - React 19
+team:
+  name: Ageng Putra Pratama
+  role: Lead Frontend Engineer
+---
+
+When we upgraded our core dashboard to **Next.js 15**, we didn't just want "better" Vital scores. We wanted to eliminate the concept of "loading" entirely for returning users.
+
+The shift from Next.js 14 to 15 isn't just about syntax; it's a fundamental architectural shift in how we handle **Static vs. Dynamic** content.
+
+<Features>
+  <Feature
+    title="Partial Prerendering (PPR)"
+    description="The holy grail of mixing static shells with dynamic holes."
+  />
+  <Feature
+    title="React Compiler"
+    description="Automatic memoization. No more useMemo hell."
+  />
+  <Feature
+    title="Granular Caching"
+    description="Using unstable_cache for precise database query control."
+  />
+  <Feature
+    title="Turbopack Dev"
+    description="5x faster HMR turnover during active development."
+  />
+</Features>
+
+## 1. Partial Prerendering (PPR): The "Shell" Strategy
+
+The biggest bottleneck in SSR (Server Side Rendering) has always been the **slowest data fetch**. If your database takes 500ms to return the user profile, the entire HTML document is blocked for 500ms.
+
+Next.js 15 introduces **PPR**, which lets us send the "Static Shell" (Navbar, Sidebar, Footer) usage immediately, while streaming the dynamic parts.
+
+```tsx
+// dashboard/layout.tsx
+export const experimental_ppr = true;
+
+export default function Layout({ children }) {
+  return (
+    <div className="layout">
+      {/* Sent instantly */}
+      <StaticSidebar />
+      {/* Streamed in as it's ready */}
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+By wrapping our dynamic widgets in `<Suspense>`, we ensure the user sees the UI **under 100ms**, even if the database is crunching numbers.
+
+## 2. Advanced Caching Patterns
+
+We moved away from the default fetch caching to a more granular approach using `unstable_cache` (now stable in v15) for our ORM calls.
+
+This allows us to cache the results of expensive aggregation queries and invalidate them only when specific semantic tags change.
+
+```typescript
+import { unstable_cache } from 'next/cache';
+import { db } from '@/lib/db';
+
+const getDashboardStats = unstable_cache(
+  async (userId: string) => {
+    return db.stats.aggregate({ where: { userId } });
+  },
+  ['dashboard-stats'], // Cache Key
+  {
+    revalidate: 3600, // Stale-while-revalidate every hour
+    tags: ['transactions'] // Invalidate on new transaction
+  }
+);
+```
+
+<Callout type="warning" title="Cache Invalidation">
+  The hardest problem in Computer Science is naming things... and cache invalidation. We automated our tag generation to prevent stale data bugs.
+</Callout>
+
+## 3. The Death of `useMemo`
+
+The **React Compiler** (initially "React Forget") has been a game changer for our codebase velocity. We stripped out over **400 usages** of `useMemo` and `useCallback`.
+
+The compiler automatically detects dependencies and memoizes value creation, meaning we no longer have to manually optimize every prop passed to a child component. The code is cleaner, and mistakenly breaking referential equality is a thing of the past.
+
+## Closing Thoughts
+
+Optimizing for enterprise scale isn't about chasing 100/100 Lighthouse scores blindly. It's about **predictability**.
+
+By leveraging PPR and granular caching, we've turned our "slowest effective response" from 1.2s down to **300ms**, dramatically improving the perceived performance for our end users.

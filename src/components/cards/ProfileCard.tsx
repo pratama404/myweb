@@ -7,6 +7,8 @@ import InteractiveReactor from '@/components/ui/InteractiveReactor';
 import MobileReactor from '@/components/ui/MobileReactor';
 import GlitchText from '@/components/ui/GlitchText';
 
+
+
 export default function ProfileCard() {
     return (
         <Card className="flex flex-col md:flex-row items-center justify-between p-6 md:p-8 gap-8 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 overflow-hidden relative h-full">

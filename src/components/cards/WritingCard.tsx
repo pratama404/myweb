@@ -12,7 +12,13 @@ interface WritingCardProps {
 }
 
 export default function WritingCard({ post, index }: WritingCardProps) {
-    const isMedium = post.source === 'medium';
+    const isEngineering = post.category === 'engineering';
+    const isJournal = post.category === 'journal';
+    const isArticle = !isEngineering && !isJournal;
+
+    // Link destination: we prioritize internal link if it exists
+    const href = post.url || `/blog/${post.slug}`;
+    const target = post.source === 'local' ? '_self' : '_blank';
 
     return (
         <motion.div
@@ -22,22 +28,24 @@ export default function WritingCard({ post, index }: WritingCardProps) {
             className="group"
         >
             <Link
-                href={post.url}
-                target="_blank"
+                href={href}
+                target={target}
                 className={cn(
                     "block h-full p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden",
-                    // Styles based on source
-                    isMedium
+                    // Styles based on CATEGORY
+                    isEngineering
                         ? "bg-neutral-900 border-neutral-800 hover:border-blue-500/50 hover:bg-neutral-800/80"
-                        : "bg-[#fffdf5] dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 hover:border-orange-400/50 hover:shadow-sm"
+                        : isJournal
+                            ? "bg-[#fffdf5] dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 hover:border-orange-400/50 hover:shadow-sm"
+                            : "bg-emerald-50/50 dark:bg-emerald-900/10 border-neutral-200 dark:border-white/10 hover:border-emerald-500/50 hover:shadow-lg dark:hover:shadow-emerald-900/10"
                 )}
             >
                 {/* Decoration */}
                 <div className={cn(
                     "absolute top-0 right-0 p-3 opacity-10 transition-opacity group-hover:opacity-20",
-                    isMedium ? "text-blue-500" : "text-orange-500"
+                    isEngineering ? "text-blue-500" : isJournal ? "text-orange-500" : "text-emerald-500"
                 )}>
-                    {isMedium ? <FileCode size={64} /> : <Coffee size={64} />}
+                    {isEngineering ? <FileCode size={64} /> : isJournal ? <Coffee size={64} /> : <BookOpen size={64} />}
                 </div>
 
                 <div className="relative z-10 flex flex-col h-full space-y-4">
@@ -45,27 +53,34 @@ export default function WritingCard({ post, index }: WritingCardProps) {
                     <div className="flex items-center justify-between">
                         <span className={cn(
                             "text-xs font-bold tracking-wider uppercase flex items-center gap-2",
-                            isMedium ? "text-blue-400" : "text-orange-600 dark:text-orange-400 font-serif italic"
+                            isEngineering ? "text-blue-400" : isJournal ? "text-orange-600 dark:text-orange-400 font-serif italic" : "text-emerald-600 dark:text-emerald-400"
                         )}>
-                            {isMedium ? <FileCode size={14} /> : <Coffee size={14} />}
-                            {isMedium ? "Engineering" : "Journal"}
+                            {isEngineering ? <FileCode size={14} /> : isJournal ? <Coffee size={14} /> : <BookOpen size={14} />}
+                            {isEngineering ? "Engineering" : isJournal ? "Journal" : "Article"}
                         </span>
-                        <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
-                            {post.date}
-                        </span>
+                        <div className="flex items-center gap-2">
+                            {post.readTime && (
+                                <span className="text-[10px] text-neutral-400 font-medium px-1.5 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800">
+                                    {post.readTime}
+                                </span>
+                            )}
+                            <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+                                {post.date}
+                            </span>
+                        </div>
                     </div>
 
                     {/* Content */}
                     <div className="space-y-2 flex-1">
                         <h3 className={cn(
                             "text-lg font-bold leading-tight group-hover:underline decoration-1 underline-offset-4",
-                            isMedium ? "text-white group-hover:text-blue-200" : "text-neutral-900 dark:text-gray-100 font-serif group-hover:text-orange-800 dark:group-hover:text-orange-200"
+                            isEngineering ? "text-white group-hover:text-blue-200" : isJournal ? "text-neutral-900 dark:text-gray-100 font-serif group-hover:text-orange-800 dark:group-hover:text-orange-200" : "text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400"
                         )}>
                             {post.title}
                         </h3>
                         <p className={cn(
                             "text-sm line-clamp-2 leading-relaxed",
-                            isMedium ? "text-neutral-400" : "text-neutral-600 dark:text-neutral-400"
+                            isEngineering ? "text-neutral-400" : "text-neutral-600 dark:text-neutral-400"
                         )}>
                             {post.description}
                         </p>
@@ -79,9 +94,11 @@ export default function WritingCard({ post, index }: WritingCardProps) {
                                     key={tag}
                                     className={cn(
                                         "text-[10px] px-2 py-0.5 rounded-full border",
-                                        isMedium
+                                        isEngineering
                                             ? "border-neutral-700 text-neutral-400 bg-neutral-800"
-                                            : "border-orange-200 text-orange-700 bg-orange-50 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-300"
+                                            : isJournal
+                                                ? "border-orange-200 text-orange-700 bg-orange-50 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-300"
+                                                : "border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20"
                                     )}
                                 >
                                     #{tag}
@@ -90,7 +107,7 @@ export default function WritingCard({ post, index }: WritingCardProps) {
                         </div>
                         <ArrowUpRight size={16} className={cn(
                             "transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-                            isMedium ? "text-neutral-500 group-hover:text-white" : "text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white"
+                            isEngineering ? "text-neutral-500 group-hover:text-white" : "text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white"
                         )} />
                     </div>
                 </div>
