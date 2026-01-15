@@ -2,13 +2,14 @@ import Container from '@/components/layout/Container';
 import Card from '@/components/ui/Card';
 import { GitCommit, Code, Coffee, Zap } from 'lucide-react';
 import { Metadata } from 'next';
-import KnowledgeGraph from '@/components/charts/KnowledgeGraph';
 import CodingActivity from '@/components/charts/CodingActivity';
 import GitHubCalendar from '@/components/charts/GitHubCalendar';
+import { getGithubGraphData } from '@/lib/github';
+import GitHubKnowledgeGraph from '@/components/charts/GitHubKnowledgeGraph';
 
 export const metadata: Metadata = {
     title: 'Stats | Ageng Putra Pratama',
-    description: 'Dashboard of personal metrics.',
+    description: 'Dashboard of personal metrics and coding activity.',
 };
 
 const METRICS = [
@@ -18,14 +19,16 @@ const METRICS = [
     { label: "Ship Speed", value: "Fast", icon: Zap, color: "text-yellow-500 dark:text-yellow-400" },
 ];
 
-export default function StatsPage() {
+export default async function StatsPage() {
+    const graphData = await getGithubGraphData();
+
     return (
         <Container>
             <div className="flex flex-col gap-8 py-12">
                 <div className="space-y-4">
                     <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-white sm:text-5xl">Dashboard</h1>
                     <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl">
-                        A glance at some personal data and metrics.
+                        Real-time metrics and project relationships.
                     </p>
                 </div>
 
@@ -57,10 +60,12 @@ export default function StatsPage() {
                 {/* Knowledge Graph */}
                 <div className="space-y-6">
                     <div className="flex items-end justify-between">
-                        <h2 className="text-xl font-bold text-neutral-900 dark:text-white">Skill Network</h2>
-                        <p className="text-sm text-neutral-500 hidden sm:block">Relationships between my core competencies.</p>
+                        <h2 className="text-xl font-bold text-neutral-900 dark:text-white">Project Galaxy</h2>
+                        <p className="text-sm text-neutral-500 hidden sm:block">
+                            Visualizing repositories and technologies from GitHub.
+                        </p>
                     </div>
-                    <KnowledgeGraph />
+                    <GitHubKnowledgeGraph data={graphData} />
                 </div>
             </div>
         </Container>

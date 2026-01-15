@@ -1,19 +1,31 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, MotionValue } from 'framer-motion';
 import { useRef } from 'react';
 
-export default function InteractiveReactor() {
+interface InteractiveReactorProps {
+    mouseX?: MotionValue<number>;
+    mouseY?: MotionValue<number>;
+}
+
+export default function InteractiveReactor({ mouseX: externalMouseX, mouseY: externalMouseY }: InteractiveReactorProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    // Smooth spring animation for mouse following
-    const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
-    const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+    // Smooth spring animation for mouse following (Internal)
+    const springX = useSpring(x, { stiffness: 150, damping: 15 });
+    const springY = useSpring(y, { stiffness: 150, damping: 15 });
+
+    // Use external motion values if provided, otherwise use internal spring
+    const mouseX = externalMouseX || springX;
+    const mouseY = externalMouseY || springY;
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        // If controlled externally, ignore internal mouse events
+        if (externalMouseX || externalMouseY) return;
+
         const rect = ref.current?.getBoundingClientRect();
         if (rect) {
             const width = rect.width;

@@ -19,7 +19,7 @@ export function Callout({
     title,
     children,
 }: CalloutProps) {
-    const Icon = icons[type];
+    const Icon = icons[type as keyof typeof icons] || icons.default;
 
     return (
         <div
