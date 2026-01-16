@@ -17,15 +17,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ageng | Software Engineer",
-    template: "%s | Ageng"
+    default: "Ageng Putra Pratama | Software Engineer & AI Architect",
+    template: "%s | Ageng Putra Pratama"
   },
-  description: "Software Engineer specializing in Next.js, TypeScript, and Cloud Architecture. Building high-performance digital experiences.",
+  description: "Software Engineer specializing in Agentic AI, Next.js, and Cloud Architecture. Building the future of autonomous workflows.",
   openGraph: {
-    title: "Ageng | Software Engineer",
-    description: "Software Engineer specializing in Next.js, TypeScript, and Cloud Architecture.",
-    url: "https://your-portfolio.com",
-    siteName: "Ageng Portfolio",
+    title: "Ageng Putra Pratama | Software Engineer & AI Architect",
+    description: "Software Engineer specializing in Agentic AI, Next.js, and Cloud Architecture.",
+    url: "https://ageng.dev",
+    siteName: "Ageng Putra Pratama",
     locale: "en_US",
     type: "website",
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Ageng",
+    title: "Ageng Putra Pratama",
     card: "summary_large_image",
   },
 };

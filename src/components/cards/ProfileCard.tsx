@@ -2,7 +2,7 @@
 
 import Card from '@/components/ui/Card';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { SOCIAL_LINKS } from '@/data/socials';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -71,7 +71,7 @@ export default function ProfileCard() {
                                 <social.icon size={20} />
                             </Link>
                         ))}
-                        <Link href="mailto:hello@ageng.dev" className="p-3 rounded-full bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition-colors text-neutral-700 dark:text-neutral-300">
+                        <Link href="mailto:agengputrapratama@gmail.com" className="p-3 rounded-full bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition-colors text-neutral-700 dark:text-neutral-300">
                             <Mail size={20} />
                         </Link>
                     </div>

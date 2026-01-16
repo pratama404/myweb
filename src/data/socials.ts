@@ -1,5 +1,5 @@
 
-import { Github, Linkedin, Twitter, Instagram, Youtube, Facebook, Mic, Globe } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Youtube, Facebook, Mic, Globe, Mail } from 'lucide-react';
 
 export const SOCIAL_LINKS = [
     {
@@ -64,5 +64,12 @@ export const SOCIAL_LINKS = [
         href: 'https://agengputrapratama.blogspot.com/',
         icon: Globe,
         color: 'hover:text-orange-500'
+    },
+    {
+        name: 'Email',
+        handle: 'agengputrapratama@gmail.com',
+        href: 'mailto:agengputrapratama@gmail.com',
+        icon: Mail,
+        color: 'hover:text-rose-500'
     }
 ];

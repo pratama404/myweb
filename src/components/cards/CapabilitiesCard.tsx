@@ -4,9 +4,9 @@ import Card from '@/components/ui/Card';
 import { Cpu, Globe, Server } from 'lucide-react';
 
 const capabilities = [
-    { icon: Globe, label: "Frontend", val: "React, Next.js, 3D" },
-    { icon: Server, label: "Backend", val: "Node, Python, Go" },
-    { icon: Cpu, label: "AI & ML", val: "PyTorch, RAG" },
+    { icon: Globe, label: "Frontend", val: "Next.js 15, React, Tailwind" },
+    { icon: Server, label: "Backend", val: "Python, FastAPI, Supabase" },
+    { icon: Cpu, label: "Agentic AI", val: "LangChain, CrewAI, RAG" },
 ];
 
 export default function CapabilitiesCard() {

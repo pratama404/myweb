@@ -1,25 +1,83 @@
 ---
-title: 'Building a Portfolio with Next.js 15'
+title: 'Building a Portfolio with Next.js 15: A Digital Garden Story'
 publishedAt: '2026-01-14'
-summary: 'How I built this portfolio using Next.js App Router, Tailwind CSS, and Framer Motion.'
+summary: 'A deep dive into the engineering choices, design inspirations, and technical challenges behind building a modern digital garden.'
+readTime: '8 min read'
+category: 'Engineering'
+spotlight: 'Standing on the shoulders of giants to build something new.'
+techStack:
+  - Next.js 15
+  - Tailwind v4
+  - Framer Motion
+  - Giscus
+team:
+  name: Ageng Putra Pratama
+  role: Frontend Engineer
 ---
 
-# Introduction
+## The Paradox of the Portfolio
 
-Building a modern portfolio requires a modern stack. In this post, I'll explore why I chose **Next.js 15** and **Tailwind CSS**.
+There is an old saying in the industry: *"The hardest product to ship is your own portfolio."*
 
-## The Stack
+Client work is easy. There are deadlines, requirements, and brand guidelines. But a personal site? It is a blank canvas with infinite possibilities. It is an identity crisis in code.
 
-- **Next.js 15**: For server component goodness.
-- **Tailwind CSS**: For rapid styling.
-- **Framer Motion**: For buttery smooth animations.
+For this version of my digital garden, I decided to stop overthinking and start building. I wanted a space that felt fast, fluid, and focused on content.
 
-## Code Snippet
+## Standing on the Shoulders of Giants
 
-```tsx
-const Hello = () => {
-  return <div>Hello World</div>
-}
-```
+I believe that good design is a conversation with those who came before us. This site heavily draws inspiration from two incredible Indonesian engineers who have set the gold standard for developer portfolios:
 
-Stay tuned for more!
+### 1. Theodorus Clarence
+If you know [Theodorus Clarence](https://theodorusclarence.com/), you know his documentation is legendary. His approach to "documentation-first" development and his clean, accessible UI patterns were a massive influence. I tried to emulate his clarity in my blog post structure and MDX components.
+
+### 2. Kent Andrian
+[Kent Andrian's website](https://kentandrian.com/) is a masterclass in minimalism and motion. The way his site breathes—subtle micro-interactions, smooth page transitions—taught me that performance isn't just about loading speed; it's about *feeling*.
+
+## Under the Hood: The Tech Stack
+
+To build something worthy of these inspirations, I reached for the bleeding edge.
+
+<Features>
+  <Feature title="Next.js 15 (App Router)">
+    I wanted to fully embrace the **Server Component** architecture. By moving the heavy lifting to the server, the client bundle remains incredibly small, ensuring top-tier Core Web Vitals.
+  </Feature>
+  <Feature title="Tailwind CSS v4">
+    The new engine is lightning fast. I'm using it to build a bespoke design system without fighting against the framework. No component libraries, just pure utility-first CSS.
+  </Feature>
+  <Feature title="Framer Motion">
+    The "Bento Grid" on the homepage isn't static. It uses layout animations to handle resizing and hover states gracefully. It turns a boring list into a tactile experience.
+  </Feature>
+  <Feature title="Giscus">
+    For the guestbook and comments, I integrated Giscus. It uses GitHub Discussions as a database, which means no backend maintenance and a verified developer audience.
+  </Feature>
+</Features>
+
+## The "Hello World" Moment
+
+The most satisfying part of this build wasn't the complex animations or the server-side rendering. It was the moment I deployed the first version.
+
+It wasn't perfect. The dark mode flickered. The fonts were wrong. But it was *live*.
+
+And that is the lesson I want to embrace for 2026: **Ship.**
+
+## Open Source Philosophy
+
+This entire portfolio is open source. I believe in learning in public and sharing knowledge.
+
+If you are curious about how I implemented the "Bento Grid" animations, the MDX pipeline, or the Giscus integration, you are welcome to explore the codebase. Fork it, star it, or even open a PR if you spot a bug (I'm sure there are a few!).
+
+<Callout type="note" title="View Source">
+  Check out the repository on GitHub: [pratama404/myweb](https://github.com/pratama404/myweb)
+</Callout>
+
+## Future Roadmap
+
+This portfolio is not a monument; it is a garden. It will grow.
+
+*   **Agentic Integration**: I plan to add a "Chat with my Resume" feature powered by RAG and local agents.
+*   **3D Elements**: Experimenting with React Three Fiber to add depth to the landing page.
+*   **Performance Tuning**: Aiming for that elusive 100/100 Lighthouse score on mobile.
+
+Thank you for visiting. If you build something cool inspired by this, let me know!
+
+Happy coding! 🚀

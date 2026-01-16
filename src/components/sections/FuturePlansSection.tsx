@@ -19,9 +19,9 @@ export default function FuturePlansSection() {
                         </span>
                         <Hammer className="text-emerald-500" size={20} />
                     </div>
-                    <h4 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Project: NeuroLink</h4>
+                    <h4 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Project: Self-Healing Infra</h4>
                     <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                        An EEG-based interface for controlling smart home devices using thought patterns. Currently prototyping.
+                        Autonomous agents that detect runtime errors, patch code, and deploy fixes without human intervention.
                     </p>
                 </Card>
 
@@ -33,9 +33,9 @@ export default function FuturePlansSection() {
                         </span>
                         <PenTool className="text-blue-500" size={20} />
                     </div>
-                    <h4 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Essay: The End of Code?</h4>
+                    <h4 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Essay: The Rise of Synthetic Employees</h4>
                     <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                        Exploring the impact of Generative AI on the future of software engineering as a career.
+                        Exploring the organizational shift from "hiring people" to "instantiating agents" and the role of the AI Architect.
                     </p>
                 </Card>
             </div>

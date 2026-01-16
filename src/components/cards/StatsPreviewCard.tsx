@@ -7,17 +7,35 @@ import { useEffect, useState } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
 
 export default function StatsPreviewCard() {
-    const [count, setCount] = useState(0);
     const spring = useSpring(0, { bounce: 0, duration: 2000 });
     const rounded = useTransform(spring, (latest) => Math.round(latest));
 
     useEffect(() => {
-        spring.set(1248);
+        const fetchContributions = async () => {
+            try {
+                // Fetch contributions for 2025
+                const response = await fetch('https://github-contributions-api.jogruber.de/v4/pratama404?y=2025');
+                const data = await response.json();
+
+                // Calculate total contributions
+                if (data.total && data.total[2025]) {
+                    spring.set(data.total[2025]);
+                } else {
+                    // Fallback if API structure differs or fails specific year, try robust sum
+                    const total = data.contributions?.reduce((acc: number, day: any) => acc + day.count, 0) || 1248;
+                    spring.set(total);
+                }
+            } catch (error) {
+                console.error("Failed to fetch contributions:", error);
+                spring.set(1248); // Fallback to partial year count
+            }
+        };
+
+        fetchContributions();
     }, [spring]);
 
     // Use a state to force re-render on value change if needed, 
     // but motion.span is better.
-    // Actually, let's use a simpler text interpolation with motion value.
 
     return (
         <Card className="h-full flex flex-col justify-between p-6 bg-neutral-100 dark:bg-neutral-900/50 border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors group">

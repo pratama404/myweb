@@ -11,6 +11,7 @@ import Sidebar from '@/components/blog/Sidebar';
 import { Callout } from '@/components/mdx/Callout';
 import { MDXImage } from '@/components/mdx/MDXImage';
 import { Features, Feature } from '@/components/mdx/Features';
+import Mermaid from '@/components/mdx/Mermaid';
 import ProgressBar from '@/components/blog/ProgressBar';
 import WritingCard from '@/components/cards/WritingCard';
 import { WritingPost } from '@/data/writing';
@@ -52,6 +53,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
         MDXImage,
         Features,
         Feature,
+        Mermaid,
         img: (props: any) => (
             <MDXImage
                 src={props.src}
@@ -59,7 +61,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
                 caption={props.title}
             />
         ),
-        // Explicit Typography Overrides (User Request - Adjusted Sizes)
+        // Explicit Typography Overrides
         h1: (props: any) => (
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white mb-8 mt-0 leading-tight" {...props} />
         ),
@@ -83,6 +85,9 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
         ),
         blockquote: (props: any) => (
             <blockquote className="border-l-4 border-emerald-500 pl-4 py-1 my-8 italic text-xl text-neutral-700 dark:text-neutral-300 bg-neutral-50 dark:bg-neutral-900/50 rounded-r-lg" {...props} />
+        ),
+        a: (props: any) => (
+            <a className="text-emerald-600 dark:text-emerald-400 font-medium underline decoration-emerald-500/30 hover:decoration-emerald-500 transition-all decoration-2 underline-offset-2" {...props} />
         ),
     };
 
