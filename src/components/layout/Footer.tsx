@@ -75,10 +75,35 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-neutral-800 text-sm text-neutral-500">
-                    <p>&copy; {new Date().getFullYear()} Ageng. All rights reserved.</p>
-                    <div className="flex gap-4 mt-4 sm:mt-0">
-                        <p>Built with Next.js, Tailwind & Framer Motion</p>
+                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-neutral-800 text-sm text-neutral-500 gap-4 md:gap-0">
+                    <div className="flex flex-col gap-2 items-center md:items-start">
+                        <p>&copy; 2026 Ageng. All rights reserved.</p>
+                        <div className="flex gap-4">
+                            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">CC BY-NC-SA 4.0</a>
+                            <span>•</span>
+                            <Link href="/privacy" className="hover:text-emerald-500 transition-colors">Privacy Policy</Link>
+                            <span>•</span>
+                            <Link href="/disclaimer" className="hover:text-emerald-500 transition-colors">Disclaimer</Link>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center md:items-end">
+                        <div className="flex gap-4 items-center">
+                            <a href="https://www.websitecarbon.com/website/agengpp-vercel-app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors flex items-center gap-1">
+                                <span>🌱 Carbon Neutral</span>
+                            </a>
+                            <span className="h-3 w-[1px] bg-neutral-700"></span>
+                            <a href="https://www.thegreenwebfoundation.org/green-web-check/?url=agengpp.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">
+                                Green Web
+                            </a>
+                            <span className="h-3 w-[1px] bg-neutral-700"></span>
+                            <a href="https://pagespeed.web.dev/analysis/https-agengpp-vercel-app/ow2af72dz5?form_factor=mobile" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">
+                                ⚡ PageSpeed
+                            </a>
+                        </div>
+                        <p className="text-xs text-neutral-600 dark:text-neutral-500">
+                            Powered by Next.js 16, Vercel & Tailwind v4
+                        </p>
                     </div>
                 </div>
             </Container>
