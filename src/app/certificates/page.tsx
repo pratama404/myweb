@@ -1,6 +1,8 @@
 import Container from '@/components/layout/Container';
 import Card from '@/components/ui/Card';
 import { Award, Calendar, ExternalLink } from 'lucide-react';
+import { FaGoogle, FaAws, FaAward, FaCode, FaCertificate, FaPalette } from 'react-icons/fa6';
+import { SiCredly } from 'react-icons/si';
 
 export const metadata = {
     title: 'Certificates',
@@ -88,31 +90,43 @@ const CREDENTIALS = [
         name: "Google Developers",
         description: "Verified Developer Profile",
         link: "https://developers.google.com/profile/u/agengputrapratama",
-        icon: "Google"
+        icon: FaGoogle,
+        color: "text-blue-500"
     },
     {
         name: "Credly",
         description: "Digital Badge Wallet",
         link: "https://www.credly.com/users/ageng-putra-pratama",
-        icon: "Credly"
+        icon: SiCredly,
+        color: "text-orange-600"
+    },
+    {
+        name: "Uxcel",
+        description: "Design & UX Profile",
+        link: "https://app.uxcel.com/ux/DXZ4Q8RD5S8G",
+        icon: FaPalette,
+        color: "text-purple-500"
     },
     {
         name: "Dicoding",
         description: "Tech Academy Profile",
         link: "https://www.dicoding.com/users/agengputrapratama",
-        icon: "Dicoding"
+        icon: FaCode,
+        color: "text-neutral-900 dark:text-white"
     },
     {
         name: "Google Skills",
         description: "Skillshop Public Profile",
         link: "https://www.skills.google/public_profiles/a72db783-9bee-4d62-a4ba-8ec77a97533a",
-        icon: "Google"
+        icon: FaGoogle,
+        color: "text-blue-500"
     },
     {
         name: "Credential.net",
         description: "Verified Certificates",
         link: "https://www.credential.net/profile/agengputrapratama290206/wallet",
-        icon: "Certificate"
+        icon: FaCertificate,
+        color: "text-emerald-500"
     }
 ];
 
@@ -145,8 +159,8 @@ export default function CertificatesPage() {
                                 rel="noopener noreferrer"
                                 className="group flex items-center gap-4 p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/50 hover:border-emerald-500/50 transition-all"
                             >
-                                <div className="p-3 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/20 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                                    <ExternalLink size={20} />
+                                <div className={`p-3 rounded-full bg-neutral-100 dark:bg-neutral-800 ${cred.color || 'text-neutral-600 dark:text-neutral-400'} group-hover:scale-110 transition-transform`}>
+                                    <cred.icon size={24} />
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">

@@ -41,7 +41,7 @@ export default function WideProjectCard({ project, index }: WideProjectCardProps
                 <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <span className="text-emerald-600 dark:text-emerald-400 font-mono text-sm tracking-widest uppercase">
-                            {project.techStack[0]}
+                            {project.category || project.techStack[0]}
                         </span>
                         <span className="text-neutral-500 text-sm font-mono">
                             {project.year}
